@@ -1,17 +1,17 @@
-package iLinkedList;
+package Stack;
 
-public class iNode<E> {
+public class Node<E> {
 
 	private E data = null;
-	private iNode<E> next = null;
+	private Node<E> next = null;
 	
-	public iNode(E obj, iNode<E> next){
+	public Node(E obj, Node<E> next){
 		
 		this.data = obj;
 		this.next = next;
 	}
 	
-	public iNode(E obj){
+	public Node(E obj){
 		
 		this.data = obj;
 		this.next = null;
@@ -23,7 +23,7 @@ public class iNode<E> {
 		this.data = object;
 	}
 	
-	public void setNext(iNode<E> node){
+	public void setNext(Node<E> node){
 		
 		this.next = node;
 		
@@ -34,7 +34,7 @@ public class iNode<E> {
 		return this.data;
 	}
 	
-	public iNode<E> nextNode(){
+	public Node<E> nextNode(){
 		
 		return next;
 	}

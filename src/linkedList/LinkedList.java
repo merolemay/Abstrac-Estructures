@@ -1,23 +1,23 @@
-package Stack;
+package linkedList;
 
 import java.util.NoSuchElementException;
 
-public class iLinkedList<E> {
+public class LinkedList<E> {
 	
-	private iNode<E> top=null;
+	private Node<E> top=null;
 	
-	public iLinkedList() {}
+	public LinkedList() {}
 	
 	//Stars the list with one object
-	public iLinkedList(E obj) {
-		top = new iNode<E>(obj,null);
+	public LinkedList(E obj) {
+		top = new Node<E>(obj,null);
 	}
 	
 	
 	
 	//Adds An element to the top of the stack and pushes every other element down there
 	public void push(E obj) {
-		top = new iNode<E>(obj,top);
+		top = new Node<E>(obj,top);
 	}
 	
 	
@@ -60,13 +60,13 @@ public class iLinkedList<E> {
 		//Adds and element to the end of the list
 		public void add(E obj) {
 			
-			iNode<E> thing = this.top;
+			Node<E> thing = this.top;
 			
 			while(thing.nextNode()!= null) {
 				thing = thing.nextNode();
 			}
 			
-			thing.setNext(new iNode<E>(obj));
+			thing.setNext(new Node<E>(obj));
 			
 		}
 		
@@ -74,7 +74,7 @@ public class iLinkedList<E> {
 		public int size() {
 			 
 			int count=0;
-			iNode<E> obj = this.top;
+			Node<E> obj = this.top;
 			
 			while(obj != null) {
 				count= count + 1;
