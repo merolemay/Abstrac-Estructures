@@ -1,9 +1,18 @@
-package PriorityQueue;
+package priorityQueue;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-public class PriorityQueue<E> {
+import Queue.Queue;
+
+public class PriorityQueue <E> implements Serializable {
 	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final Object[] table;
 	private final int capacity;
 	private int size;
@@ -14,6 +23,18 @@ public class PriorityQueue<E> {
 	        this.size = -1;
 	}
 	
+	
+    @SuppressWarnings("unchecked")
+	public E Head() throws NoSuchElementException  {
+    	
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        } else {
+            return ((Node<E>) table[0]).getObj();
+        }
+    }
+    
+    
     @SuppressWarnings("unchecked")
 	public E pop() throws NoSuchElementException  {
         if (isEmpty()) {
@@ -63,10 +84,22 @@ public class PriorityQueue<E> {
         }
     }
     
+    public int getSize() {
+		return size;
+	}
     
 	public boolean isEmpty() {
 		
 		return size < 0;
 	}
-	
+	public ArrayList<E> toArrayList() {
+		ArrayList<E> vojabes = new ArrayList<E>();
+		PriorityQueue<E> q = this;
+		for (int i = 0; i < size; i++) {
+			vojabes.add(q.pop());
+		}
+		
+		return vojabes;
+	}
 }
+

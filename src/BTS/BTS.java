@@ -1,10 +1,17 @@
 package BTS;
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class BTS<T> {
+
+public class BTS<T extends Comparable<? super T>> implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Node<T> root;
+	
 	
 	
 	/**
@@ -23,16 +30,17 @@ public class BTS<T> {
 	 * @param value : The value of the node that is going to be added.
 	 * @return : The recursive return.
 	 */
-	public Node<T> addNodeRecursive(Node<T> current,T value) {	
+	private Node<T> addNodeRecursive(Node<T> current,T value) {	
+		
 		if(current==null) {
 		return new Node<T> (value);
 		} 
 		
-		if((Integer)value < (Integer)current.getValue()) {
+		if(value.compareTo(current.getValue())>0) {
 			current.nodeLeft = addNodeRecursive(current.nodeLeft,value);
 		}
 		
-		else if((Integer)value > (Integer)current.getValue()) {
+		else if(value.compareTo(current.getValue())<0) {
 			current.nodeRight = addNodeRecursive(current.nodeRight,value);
 		} else {
 			//The value exist
@@ -41,13 +49,24 @@ public class BTS<T> {
 	
 		return current;
 	}
-	
+	public boolean delete(T value) {
+		if(value.equals(root.getValue())) {
+			if(root.nodeLeft==null && root.nodeRight==null) {
+				root=null;
+				return true;
+			} else
+				return false;
+		}
+		else {
+			return (deleteRecursive(root,value).equals(null))?true:false;
+		}
+	}
 	/** Recursive Method for deleting a Node with no children of the BTS.
 	 * @param current : Current position in the tree.
 	 * @param value : Value of the Node which is going to be deleted.
 	 * @return : Returns the Node as a null when is deleted o a system out print if the node has children.
 	 */
-	public Node<T> deleteRecursive(Node<T> current,T value) {
+	private Node<T> deleteRecursive(Node<T> current,T value) {
 		if (current == null) {
 	        return null;
 	    }
@@ -57,7 +76,7 @@ public class BTS<T> {
 	    		current=null;
 	    		deleteRecursive(current, value);
 	    	} else {
-	    		System.out.println("This node can't be deleted because has chilndrens");
+	    		System.out.println("This node can't be deleted because has chilndren");
 	    		return null;
 	    	}
 	    } 
@@ -96,8 +115,7 @@ public class BTS<T> {
 	    	report +=" " + node.getValue();
 	        traverseInOrder(node.nodeLeft);
 	        traverseInOrder(node.nodeRight);
-	    }
-	    
+	    }  
 	    return report;
 	}
 	
@@ -143,6 +161,10 @@ public class BTS<T> {
 	        }
 	    }
 	    return report;
+	}
+	
+	public Node<T> getRoot() {
+		return root;
 	}
 }
 

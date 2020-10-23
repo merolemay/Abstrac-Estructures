@@ -1,4 +1,4 @@
-package PriorityQueue;
+package priorityQueue;
 
 public class Node<E> {
 	

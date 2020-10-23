@@ -1,12 +1,19 @@
 package linkedList;
 
+import java.io.Serializable;
 import java.util.NoSuchElementException;
 
-public class LinkedList<E> {
+public class LinkedList<E> implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Node<E> top=null;
 	
-	public LinkedList() {}
+	public LinkedList() {
+		top = new Node<E>(null,null);
+	}
 	
 	//Stars the list with one object
 	public LinkedList(E obj) {
@@ -60,13 +67,19 @@ public class LinkedList<E> {
 		//Adds and element to the end of the list
 		public void add(E obj) {
 			
+			
+			if(top==null) {
+				top = new Node<E>(obj,null);
+			} else {
 			Node<E> thing = this.top;
 			
 			while(thing.nextNode()!= null) {
 				thing = thing.nextNode();
+				
 			}
 			
 			thing.setNext(new Node<E>(obj));
+			}
 			
 		}
 		

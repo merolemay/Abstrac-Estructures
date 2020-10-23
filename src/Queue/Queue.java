@@ -1,9 +1,15 @@
 package Queue;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-public class Queue<E> {
+public class Queue<E> implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Node<E> head = null;
 	private Node<E> tail = null;
 	private int queueSize=0;
@@ -53,18 +59,10 @@ public class Queue<E> {
 		if (queueSize == 0){
 	
 			throw new NoSuchElementException();
-		}
-		else if (queueSize == 1){
-			
-			E swap = head.get();
-			head = null;
-			queueSize -= 1;
-			return swap;
-		} else {
-			
+	
+		} else {	
 			E swap = head.get();
 			head = head.getPrevious();
-			head.setNext(null);
 			queueSize -= 1;
 			return swap;
 		}
@@ -75,4 +73,21 @@ public class Queue<E> {
 		return queueSize;
 	}
 	
+	public boolean isEmpty() {
+		if(head==null) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public ArrayList<E> toArrayList() {
+		ArrayList<E> vojabes = new ArrayList<E>();
+		Queue<E> q = this;
+		for (int i = 0; i < queueSize; i++) {
+			vojabes.add(q.dequeue());
+		}
+		
+		return vojabes;
+	}
 }
