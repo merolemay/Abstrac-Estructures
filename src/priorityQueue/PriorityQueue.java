@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-import Queue.Queue;
+import queue.Queue;
 
 public class PriorityQueue <E> implements Serializable {
 	

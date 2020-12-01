@@ -1,4 +1,4 @@
-package Queue;
+package queue;
 
 import java.io.Serializable;
 import java.util.ArrayList;

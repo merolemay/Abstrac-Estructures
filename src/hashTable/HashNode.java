@@ -1,4 +1,4 @@
-package HashTable;
+package hashTable;
 
 public class HashNode<K, V>  {
 	

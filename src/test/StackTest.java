@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import Stack.Stack;
+import stack.Stack;
 
 class StackTest {
 	Stack<String> stack;

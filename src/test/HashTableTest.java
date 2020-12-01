@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import HashTable.HashTable;
+import hashTable.HashTable;
 
 class HashTableTest {
 	

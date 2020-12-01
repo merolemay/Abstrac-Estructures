@@ -1,4 +1,4 @@
-package HashTable;
+package hashTable;
 
 public interface Map<K, V> {
 	

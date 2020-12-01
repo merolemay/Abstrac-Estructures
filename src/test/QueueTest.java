@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import Queue.Queue;
+import queue.Queue;
 
 class QueueTest {
 	
