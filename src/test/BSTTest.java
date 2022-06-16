@@ -81,11 +81,11 @@ class BSTTest {
 		setUpEmptyBST();
 		
 		b.add("Problema", 12);
-		b.add("Sujeto de prueba", 19);
+		b.add("Sujeto de prueba", 18);
 		b.add("Sujeto de choque", 19);
 		b.delete(12);
 		
-		assertFalse(b.search(19).equals("Sujeto de choque"));
+		assertTrue(b.search(18).equals("Sujeto de prueba"));
 	}
 
 }
