@@ -27,14 +27,14 @@ class BSTTest {
 	@Test
 	void testSearch1() {
 		setUpBST();
-		
-		assertTrue(b.search(14).equals("Ante"));
+
+        assertEquals("Ante", b.search(14));
 	}
 	@Test
 	void testSearch2() {
 		setUpBST();
-		
-		assertTrue(b.search(7).equals("Antoni"));
+
+        assertEquals("Antoni", b.search(7));
 	}
 	
 
@@ -43,8 +43,8 @@ class BSTTest {
 		setUpBST();
 		
 		b.add("Sujeto de prueba", 19);
-		
-		assertTrue(b.search(19).equals("Sujeto de prueba"));
+
+        assertEquals("Sujeto de prueba", b.search(19));
 	}
 	
 	@Test
@@ -52,8 +52,8 @@ class BSTTest {
 		setUpEmptyBST();
 		
 		b.add("Sujeto de prueba", 19);
-		
-		assertTrue(b.search(19).equals("Sujeto de prueba"));
+
+        assertEquals("Sujeto de prueba", b.search(19));
 	}
 	
 	@Test
@@ -64,16 +64,16 @@ class BSTTest {
 		b.add("Problema", 12);
 		b.add("Sujeto de prueba", 19);
 		b.add("Sujeto de choque", 19);
-		
-		assertTrue(b.search(19).equals("Sujeto de prueba"));
+
+        assertEquals("Sujeto de prueba", b.search(19));
 	}
 	@Test
 	void testDelete1() {
 		setUpBST();
 		
 		b.delete(12);
-		
-		assertFalse(b.search(12).equals("Carlos"));
+
+        assertNotEquals("Carlos", b.search(12));
 	}
 	
 	@Test
@@ -84,8 +84,8 @@ class BSTTest {
 		b.add("Sujeto de prueba", 18);
 		b.add("Sujeto de choque", 19);
 		b.delete(12);
-		
-		assertTrue(b.search(18).equals("Sujeto de prueba"));
+
+        assertEquals("Sujeto de prueba", b.search(18));
 	}
 
 }

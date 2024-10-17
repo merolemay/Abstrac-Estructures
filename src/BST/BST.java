@@ -4,135 +4,104 @@ public class BST<E, K extends Comparable<? super K>> {
 
 	private Node<E, K> root;
 
+	// Default constructor
 	public BST() {
-		root=null;
+		root = null;
 	}
 
-	public BST(Node<E, K> current) {
-		root = current;
+	// Constructor initializing with a specific root node
+	public BST(Node<E, K> root) {
+		this.root = root;
 	}
 
+	// Constructor initializing with an element and key
 	public BST(E element, K key) {
-		root = new Node<E, K>(element, key);
+		root = new Node<>(element, key);
 	}
 
+	// Search for an element by key
 	public E search(K key) {
-		if(root==null) {
-		throw new NullPointerException();
-		} else {
-			if (root.getKey().equals(key)) {
-				return root.getElement();
-			} else {
-				return searchRecursive(root, key);
-			}
+		if (root == null) {
+			throw new NullPointerException("Tree is empty.");
 		}
+		return searchRecursive(root, key);
 	}
 
+	// Recursive function to search for a key
 	private E searchRecursive(Node<E, K> current, K key) {
-
-		if (key == current.getKey()) {
-			return current.getElement();
+		if (current == null) {
+			return null; // Key not found
 		}
-		if ((Integer) key < (Integer) current.getKey()) {
-			return searchRecursive(current.getNodeLeft(), key);
+		if (key.compareTo(current.getKey()) == 0) {
+			return current.getElement(); // Key found
+		} else if (key.compareTo(current.getKey()) < 0) {
+			return searchRecursive(current.getNodeLeft(), key); // Search left subtree
 		} else {
-			return searchRecursive(current.getNodeRight(), key);
+			return searchRecursive(current.getNodeRight(), key); // Search right subtree
 		}
-
 	}
 
-	/**
-	 * Adds a new Node to the BTS using recursive insertion bases on his value.
-	 * 
-	 * <pre>
-	 *  The value most not be repeated
-	 * </pre>
-	 * 
-	 * @param value : Is the value of the node.
-	 */
+	// Add a new element with the corresponding key
 	public void add(E element, K key) {
 		root = addNodeRecursive(root, element, key);
 	}
-	
-	private Node<E, K> addNodeRecursive(Node<E, K> current, E element, K key) {
 
+	// Recursive function to add a new node
+	private Node<E, K> addNodeRecursive(Node<E, K> current, E element, K key) {
 		if (current == null) {
-			return new Node<E, K>(element, key);
+			return new Node<>(element, key); // Base case: insert new node
 		}
 
 		if (key.compareTo(current.getKey()) < 0) {
-			current.setLeft(addNodeRecursive(current.getNodeLeft(), element, key));
-		}
-
-		else {
-			current.setRight(addNodeRecursive(current.getNodeRight(), element, key));
+			current.setLeft(addNodeRecursive(current.getNodeLeft(), element, key)); // Insert in left subtree
+		} else if (key.compareTo(current.getKey()) > 0) {
+			current.setRight(addNodeRecursive(current.getNodeRight(), element, key)); // Insert in right subtree
 		}
 
 		return current;
 	}
 
-
-
-	/**
-	 * Recursive Method for deleting a Node with no children of the BTS.
-	 * 
-	 * @param current : Current position in the tree.
-	 * @param value   : Value of the Node which is going to be deleted.
-	 * @return : Returns the Node as a null when is deleted o a system out print if
-	 *         the node has children.
-	 */
+	// Delete a node by key
 	public void delete(K key) {
 		root = deleteRecursive(root, key);
 	}
-	
+
+	// Recursive function to delete a node
 	private Node<E, K> deleteRecursive(Node<E, K> current, K key) {
 		if (current == null) {
-			return null;
+			return null; // Base case: key not found
 		}
-		if (key.compareTo(current.getKey())<0) {
-			current.setLeft(deleteRecursive(current.getNodeLeft(), key));
-		} 
-		else if(key.compareTo(current.getKey())>0) {
-		current.setRight(deleteRecursive(current.getNodeRight(), key));
+
+		if (key.compareTo(current.getKey()) < 0) {
+			current.setLeft(deleteRecursive(current.getNodeLeft(), key)); // Search in left subtree
+		} else if (key.compareTo(current.getKey()) > 0) {
+			current.setRight(deleteRecursive(current.getNodeRight(), key)); // Search in right subtree
 		} else {
-			if(current.getNodeLeft()==null && current.getNodeRight()==null) {
-				current=null;
+			// Node to be deleted found
+			if (current.getNodeLeft() == null) {
+				return current.getNodeRight(); // Node with only right child or no children
+			} else if (current.getNodeRight() == null) {
+				return current.getNodeLeft(); // Node with only left child
+			} else {
+				// Node with two children: find in-order successor (smallest in right subtree)
+				Node<E, K> temp = findRightmost(current.getNodeRight());
+				current.setElement(temp.getElement());
+				current.setRight(deleteRecursive(current.getNodeRight(), temp.getKey()));
 			}
-			else if(current.getNodeLeft()==null) {
-				return current.getNodeRight();
-			}
-			else if(current.getNodeRight()==null) {
-				return current.getNodeLeft();
-			}
-			else {
-				Node<E, K>  data = findRightmost(current);
-				current.setElement(data.getElement());
-				current.setRight(deleteRecursive(current.getNodeRight(), data.getKey()));
-			}
-			
 		}
-		
+
 		return current;
 	}
-	
-	private Node<E, K> findRightmost(Node<E, K> node) {
-		if (node.getNodeLeft() == null) {
-			return node;
-		} else {
-			return findRightmost(node.getNodeLeft());
-		}
 
+	// Find the rightmost node (smallest key) in a subtree
+	private Node<E, K> findRightmost(Node<E, K> node) {
+		while (node.getNodeLeft() != null) {
+			node = node.getNodeLeft();
+		}
+		return node;
 	}
 
-	/**
-	 * The in-order traversal consists of first visiting the left sub-tree, then the
-	 * root node, and finally the right sub-tree.
-	 * 
-	 * @param node : Root of the tree.
-	 * @return : the list of nodes in the tree in order.
-	 */
-	
-	
+	// In-order traversal: left subtree -> root -> right subtree
 	public void traverseInOrder() {
 		traverseInOrder(root);
 	}
@@ -145,46 +114,34 @@ public class BST<E, K extends Comparable<? super K>> {
 		}
 	}
 
-	/**
-	 * Pre-order traversal visits first the root node, then the left subtree, and
-	 * finally the right subtree.
-	 * 
-	 * @param node : Root of the tree.
-	 * @return : the list of nodes in the tree in pre-order.
-	 */
-	
+	// Pre-order traversal: root -> left subtree -> right subtree
 	public void traversePreOrder() {
-		 traversePreOrder(root);
+		traversePreOrder(root);
 	}
+
 	private void traversePreOrder(Node<E, K> node) {
 		if (node != null) {
-			System.out.println(" " + node.getElement());
-			traverseInOrder(node.getNodeLeft());
-			traverseInOrder(node.getNodeRight());
+			System.out.println(node.getElement());
+			traversePreOrder(node.getNodeLeft());
+			traversePreOrder(node.getNodeRight());
 		}
 	}
 
-	/**
-	 * Post-order traversal visits the left subtree, the right subtree, and the root
-	 * node at the end.
-	 * 
-	 * @param node : Root of the tree.
-	 * @return : the list of nodes in the tree in Post-order.
-	 */
+	// Post-order traversal: left subtree -> right subtree -> root
 	public void traversePostOrder() {
 		traversePostOrder(root);
 	}
+
 	private void traversePostOrder(Node<E, K> node) {
 		if (node != null) {
-			traverseInOrder(node.getNodeLeft());
-			traverseInOrder(node.getNodeRight());
-			System.out.println(" " + node.getElement());
+			traversePostOrder(node.getNodeLeft());
+			traversePostOrder(node.getNodeRight());
+			System.out.println(node.getElement());
 		}
 	}
 
-
+	// Get the root node
 	public Node<E, K> getRoot() {
 		return root;
 	}
-
 }
